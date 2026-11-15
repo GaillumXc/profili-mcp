@@ -83,6 +83,12 @@ python -m profili_mcp --selftest
 - 坐标存百分比弦长；`FlagSopraSotto` 0=上表面、1=下表面
 - 验证依据：库中 NACA 2412 @ Re=400k, α=0° 存为 CL=0.2232、CM=−0.0493，与教科书精确吻合
 
+## 实战示例
+
+[examples/](examples/) 目录是用本库完成的真实案例分析（NACA 2412 @ Re=3×10⁵ 极曲线，
+含特征参数提取与出图）：`python examples/analysis_compute.py && python examples/analysis_naca2412.py`。
+结果与 Profili 自带库存极曲线及 Abbott 经典文献值吻合，见 [examples/README.md](examples/README.md)。
+
 ## 已知坑
 
 - **非 ASCII 安装路径 + editable 安装**：CPython 的 `site.py` 用系统 locale（GBK）读 `.pth` 文件，项目路径含中文时 editable 安装会起不来。规避：clone 到纯英文路径，或用 `PYTHONPATH=src python -m profili_mcp` 直接跑。
