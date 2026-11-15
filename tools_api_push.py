@@ -42,8 +42,12 @@ def api_raw(method: str, url: str, payload: dict) -> dict:
         headers={"Authorization": f"Bearer {TOKEN}",
                  "Accept": "application/vnd.github+json",
                  "Content-Type": "application/json"})
-    with OPENER.open(req, timeout=60) as resp:
-        return json.loads(resp.read().decode("utf-8"))
+    try:
+        with OPENER.open(req, timeout=60) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"{method} {url} -> HTTP {exc.code}: {body[:300]}") from exc
 
 
 def api(method: str, path: str, payload: dict) -> dict:
@@ -56,9 +60,17 @@ def git(*args: str) -> str:
 
 
 def repo_is_empty() -> bool:
-    req = urllib.request.Request(API, headers={"Authorization": f"Bearer {TOKEN}"})
-    with OPENER.open(req, timeout=60) as resp:
-        return json.loads(resp.read())["size"] == 0
+    """Branch presence is the reliable emptiness signal; the repo `size`
+    field lags behind content uploads."""
+    req = urllib.request.Request(API + "/git/refs/heads/main",
+                                 headers={"Authorization": f"Bearer {TOKEN}"})
+    try:
+        OPENER.open(req, timeout=60).close()
+        return False
+    except urllib.error.HTTPError as exc:
+        if exc.code == 404:
+            return True
+        raise
 
 
 def create_initial_commit(path: str, content: bytes, message: str) -> str:
