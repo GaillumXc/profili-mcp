@@ -12,6 +12,10 @@
 
 以上全部封装为 14 个 MCP 工具。据我所知这是首个面向 Profili 的 MCP 服务器；使这一切成为可能的存储格式逆向结论记录在 [docs/SCHEMA.md](docs/SCHEMA.md) 中。
 
+![NACA 2412 在 Re=30 万下的极曲线：计算结果与 Profili 库对比](examples/figures/fig2_cl_alpha_cd_alpha.png)
+
+*实战示例（[examples/](examples/)）：NACA 2412，Re=3×10⁵，计算极曲线与软件内置库极曲线对比。*
+
 ## 工具一览
 
 | 工具 | 功能 |
