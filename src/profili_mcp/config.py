@@ -12,6 +12,7 @@ Resolution order for the install directory:
 
 from __future__ import annotations
 
+import contextlib
 import json
 import os
 import subprocess
@@ -45,7 +46,7 @@ class ProfiliPaths:
         try:
             out = subprocess.run(
                 ["tasklist", "/FI", "IMAGENAME eq Profili.exe", "/nh"],
-                capture_output=True, text=True, timeout=15,
+                capture_output=True, text=True, timeout=15, check=False,
             )
         except Exception:
             return False
@@ -69,7 +70,7 @@ def _cache_write(install_dir: Path) -> None:
             encoding="utf-8",
         )
     except Exception:
-        pass  # caching is best-effort only
+        contextlib.suppress(Exception)  # caching is best-effort only
 
 
 def _looks_like_profili(directory: Path) -> bool:

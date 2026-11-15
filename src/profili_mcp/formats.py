@@ -68,7 +68,7 @@ def parse_dat(text: str, fallback_name: str = "") -> AirfoilGeometry:
     lines = text.splitlines()
     name = fallback_name
     pts: list[tuple[float, float]] = []
-    for i, line in enumerate(lines):
+    for line in lines:
         parts = line.split()
         if len(parts) >= 2:
             try:
@@ -158,12 +158,12 @@ def parse_dati_pol(text: str) -> list[XfoilPolarRow]:
             vals = [float(v) for v in parts[: len(col_header)]]
         except ValueError:
             continue
-        rec = dict(zip(col_header, vals))
+        rec = dict(zip(col_header, vals, strict=False))
 
-        def g(*names: str, default: float = 0.0) -> float:
+        def g(*names: str, _rec: dict = rec, default: float = 0.0) -> float:
             for n in names:
-                if n in rec:
-                    return rec[n]
+                if n in _rec:
+                    return _rec[n]
             return default
 
         rows.append(XfoilPolarRow(

@@ -14,7 +14,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from profili_mcp.formats import AirfoilGeometry, format_dat, parse_dat  # noqa: E402
+from profili_mcp.formats import format_dat, parse_dat
 
 DAT_SAMPLE = """TEST FOIL
    1.00000\t   0.00026

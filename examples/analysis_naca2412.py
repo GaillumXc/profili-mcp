@@ -8,10 +8,12 @@
 from __future__ import annotations
 
 import csv
+import itertools
 import json
 from pathlib import Path
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -28,7 +30,7 @@ RE = d.get("stored_re", 300_000)
 # --- extract parameters ------------------------------------------------------
 def interp_zero_lift(pts):
     pts = sorted(pts, key=lambda r: r[0])
-    for r1, r2 in zip(pts, pts[1:]):
+    for r1, r2 in itertools.pairwise(pts):
         a1, c1 = r1[0], r1[1]
         a2, c2 = r2[0], r2[1]
         if c1 == 0.0:
@@ -55,7 +57,8 @@ params = {
     "LD_max": round(ld_peak[3], 1), "LD_max_alpha": ld_peak[0],
     "stored_CLmax_at_13": round(stored_peak[1], 4),
 }
-(OUT / "parameters.json").write_text(json.dumps(params, ensure_ascii=False, indent=2), encoding="utf-8")
+(OUT / "parameters.json").write_text(
+    json.dumps(params, ensure_ascii=False, indent=2), encoding="utf-8")
 print(json.dumps(params, ensure_ascii=False, indent=2))
 
 # --- CSV ---------------------------------------------------------------------

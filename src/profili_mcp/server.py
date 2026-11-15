@@ -14,6 +14,7 @@ against your installation before wiring it into an MCP client.
 
 from __future__ import annotations
 
+import itertools
 import json
 import os
 import subprocess
@@ -22,10 +23,9 @@ from pathlib import Path
 from fastmcp import FastMCP
 
 from .config import get_paths, platform_notes
-from .db import (BridgeError, PolarPoint, ProfiliDB, decode_alfa, decode_coef,
-                 decode_re)
+from .db import BridgeError, PolarPoint, ProfiliDB
 from .formats import AirfoilGeometry, format_dat, parse_dat
-from .xfoil import XfoilError, redesign_thickness_camber, run_polar
+from .xfoil import redesign_thickness_camber, run_polar
 
 mcp = FastMCP("profili-mcp")
 
@@ -71,7 +71,7 @@ def get_status(install_dir: str | None = None) -> str:
             "database": counts,
             "platform": platform_notes(),
         })
-    except Exception as exc:  # noqa: BLE001 - report everything to the agent
+    except Exception as exc:
         return _err(exc)
 
 
@@ -230,7 +230,6 @@ def find_airfoils_by_polar(name_prefix: str, re: int, alfa: float,
     try:
         db = _db(install_dir)
         candidates = db.search_airfoils(name=name_prefix, limit=500)
-        stored_alfa = (alfa - decode_alfa(0)) * 10.0  # not used directly; kept for clarity
         results = []
         for cand in candidates:
             try:
@@ -240,7 +239,7 @@ def find_airfoils_by_polar(name_prefix: str, re: int, alfa: float,
             pts = sorted(pol["points"], key=lambda p: p.alfa)
             # interpolate at requested alpha
             val = None
-            for a, b in zip(pts, pts[1:]):
+            for a, b in itertools.pairwise(pts):
                 if a.alfa <= alfa <= b.alfa and b.alfa > a.alfa:
                     t = (alfa - a.alfa) / (b.alfa - a.alfa)
                     val = PolarPoint(alfa, a.cl + t * (b.cl - a.cl),
@@ -390,7 +389,6 @@ def selftest(install_dir: str | None = None) -> dict:
 
     try:
         db = _db(install_dir)
-        meta = db.airfoil_meta("NACA 2412")
         pol = db.polar("NACA 2412", 400_000)
         at0 = min(pol["points"], key=lambda q: abs(q.alfa))
         ok = abs(at0.cl - 0.2232) < 0.02 and abs(at0.cm + 0.0493) < 0.01

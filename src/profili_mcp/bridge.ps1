@@ -43,7 +43,7 @@ if ($Mode -eq 'batch') {
         exit 0
     }
     catch {
-        [Console]::Error.WriteLine('BRIDGE_ERROR: ' + $_.Exception.Message)
+        Write-Output ('BRIDGE_ERROR: ' + $_.Exception.Message)
         exit 1
     }
 }
@@ -89,7 +89,10 @@ try {
     }
 }
 catch {
-    [Console]::Error.WriteLine('BRIDGE_ERROR: ' + $_.Exception.Message)
+    # NOTE: [Console]::OutputEncoding does not affect the error stream, which
+    # would come out in the system locale (mojibake for CJK). Emit errors on
+    # stdout instead, where the UTF-8 encoding set above applies.
+    Write-Output ('BRIDGE_ERROR: ' + $_.Exception.Message)
     exit 1
 }
 finally {

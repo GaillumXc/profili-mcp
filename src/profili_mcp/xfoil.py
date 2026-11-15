@@ -20,8 +20,13 @@ import uuid
 from dataclasses import dataclass
 from pathlib import Path
 
-from .formats import (AirfoilGeometry, XfoilPolarRow, format_dat, parse_dati_pol,
-                      parse_dat)
+from .formats import (
+    AirfoilGeometry,
+    XfoilPolarRow,
+    format_dat,
+    parse_dat,
+    parse_dati_pol,
+)
 
 
 class XfoilError(RuntimeError):
@@ -53,7 +58,7 @@ def _run(xfoil_exe: Path, paths: XfoilPaths) -> str:
     script_text = paths.script.read_text(encoding="ascii")
     try:
         proc = subprocess.run(
-            [str(xfoil_exe)],
+            [str(xfoil_exe)], check=False,
             input=script_text,
             capture_output=True,
             text=True,

@@ -17,16 +17,17 @@ NACA 2412 values and symmetric Joukowski profiles):
 
 from __future__ import annotations
 
+import contextlib
 import json
 import os
 import shutil
 import subprocess
-import sys
 import tempfile
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from .config import ProfiliPaths, default_bridge_ps1, get_paths
 
@@ -73,12 +74,15 @@ def run_bridge(dbq: Path, sql: str, mode: str = "query", timeout: int = 300) -> 
     if sql == "" and mode in ("query", "scalar", "exec"):
         raise BridgeError("empty SQL statement")
     try:
-        proc = subprocess.run(argv, capture_output=True, timeout=timeout + 30)
+        proc = subprocess.run(argv, capture_output=True, timeout=timeout + 30, check=False)
     except subprocess.TimeoutExpired as exc:
         raise BridgeError(f"bridge timed out after {timeout}s: {sql[:120]}") from exc
     if proc.returncode != 0:
+        # bridge.ps1 emits BRIDGE_ERROR on stdout (UTF-8); stderr may hold
+        # PowerShell's own locale-encoded messages as a fallback only.
+        out = proc.stdout.decode("utf-8", errors="replace").strip()
         err = proc.stderr.decode("gbk", errors="replace").strip()
-        raise BridgeError(f"bridge error: {err or proc.stdout.decode('utf-8', errors='replace')[:400]}")
+        raise BridgeError(f"bridge error: {out or err or '(no output)'}")
     out = proc.stdout.decode("utf-8", errors="replace").strip()
     if not out:
         return [] if mode == "query" else None
@@ -120,11 +124,11 @@ def encode_coef(value: float) -> int:
 
 
 def decode_re(raw: float) -> int:
-    return int(round(raw * RE_DIVISOR))
+    return round(raw * RE_DIVISOR)
 
 
 def encode_re(re: int) -> int:
-    return int(round(re / RE_DIVISOR))
+    return round(re / RE_DIVISOR)
 
 
 # --- database ----------------------------------------------------------------
@@ -177,29 +181,28 @@ class ProfiliDB:
             raise PermissionError("ProfiliDB opened read-only; pass writable=True for write tools")
         if not statements:
             return 0
-        tmp = tempfile.NamedTemporaryFile(
-            "w", suffix=".json", encoding="utf-8", delete=False)
         try:
-            json.dump(statements, tmp, ensure_ascii=False)
-            tmp.close()
+            with tempfile.NamedTemporaryFile(
+                    "w", suffix=".json", encoding="utf-8", delete=False) as tmp:
+                json.dump(statements, tmp, ensure_ascii=False)
+                tmp_name = tmp.name
             argv = [
                 *_powershell32(),
                 "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass",
                 "-File", str(default_bridge_ps1()),
                 "-Dbq", str(self.paths.mdb),
-                "-SqlFile", tmp.name,
+                "-SqlFile", tmp_name,
                 "-Mode", "batch",
                 "-TimeoutSec", "300",
             ]
-            proc = subprocess.run(argv, capture_output=True, timeout=360)
+            proc = subprocess.run(argv, capture_output=True, timeout=360, check=False)
         finally:
-            try:
-                os.unlink(tmp.name)
-            except OSError:
-                pass
+            with contextlib.suppress(OSError):
+                os.unlink(tmp_name)
         if proc.returncode != 0:
+            out = proc.stdout.decode("utf-8", errors="replace").strip()
             err = proc.stderr.decode("gbk", errors="replace").strip()
-            raise BridgeError(f"bridge batch error: {err[:400]}")
+            raise BridgeError(f"bridge batch error: {out or err or '(no output)'}")
         data = json.loads(proc.stdout.decode("utf-8", errors="replace").strip())
         return int(data.get("affected", 0))
 
@@ -237,7 +240,7 @@ class ProfiliDB:
                "CodiceLibreria, IdInLibreria FROM Profili")
         if where:
             sql += " WHERE " + " AND ".join(where)
-        sql += f" ORDER BY Nome"
+        sql += " ORDER BY Nome"
         if limit and limit > 0:
             sql = sql.replace("SELECT", f"SELECT TOP {int(limit)}", 1)
         return self.query(sql)
@@ -293,7 +296,8 @@ class ProfiliDB:
             raise KeyError(f"no polars stored for {name!r}")
         hid = int(header[0]["id"])
         rows = self.query(
-            f"SELECT Alfa, CL, CD, CM FROM PolariCoordinate WHERE Fk_Id_Polare = {hid} ORDER BY Alfa")
+            "SELECT Alfa, CL, CD, CM FROM PolariCoordinate "
+            f"WHERE Fk_Id_Polare = {hid} ORDER BY Alfa")
         points = [
             PolarPoint(
                 alfa=decode_alfa(float(r["alfa"])),

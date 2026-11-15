@@ -2,6 +2,8 @@
 
 中文 | [English](README.en.md)
 
+[![ci](https://github.com/GaillumXc/profili-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/GaillumXc/profili-mcp/actions/workflows/ci.yml) [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![python](https://img.shields.io/badge/python-3.11%2B-blue)](pyproject.toml) [![release](https://img.shields.io/github/v/release/GaillumXc/profili-mcp)](https://github.com/GaillumXc/profili-mcp/releases)
+
 老牌翼型软件 [Profili 2.x](https://www.profili2.com/) 的 MCP 服务器。
 
 [Profili](https://www.profili2.com/eng/) 是一款经典的翼型设计与分析软件（内置 2200+ 翼型、126 万条极曲线数据），开发已于 2015 年前后停止。它没有脚本 API，也没有 COM/OLE 自动化接口，所以本项目转而与它实际存在的三个接口打交道：

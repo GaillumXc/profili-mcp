@@ -2,6 +2,8 @@
 
 [中文](README.md) | English
 
+[![ci](https://github.com/GaillumXc/profili-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/GaillumXc/profili-mcp/actions/workflows/ci.yml) [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![python](https://img.shields.io/badge/python-3.11%2B-blue)](pyproject.toml) [![release](https://img.shields.io/github/v/release/GaillumXc/profili-mcp)](https://github.com/GaillumXc/profili-mcp/releases)
+
 MCP server for the legacy [Profili 2.x](https://www.profili2.com/) airfoil software.
 
 [Profili](https://www.profili2.com/eng/) is a classic airfoil design and analysis tool (2200+ airfoils, 1.26M polar data points) whose development ended around 2015. It has no scripting API and no COM/OLE automation interface, so this project works with the three interfaces it does have:
