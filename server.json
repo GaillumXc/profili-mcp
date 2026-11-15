@@ -2,17 +2,22 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.GaillumXc/profili-mcp",
   "title": "Profili MCP",
-  "description": "MCP server for the legacy Profili 2.x airfoil software. 14 tools: airfoil-library search, geometry export/import, polar read and XFOIL batch computation, thickness/camber redesign, and GUI process control — via direct read/write access to the Profili Jet database, its bundled XFOIL engine, and the application process.",
+  "description": "Legacy Profili 2.x airfoil software MCP server: library search, XFOIL polars, redesign, DB access.",
   "repository": {
     "url": "https://github.com/GaillumXc/profili-mcp",
     "source": "github"
   },
-  "version": "0.1.0",
+  "version": "0.1.1",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "profili-mcp",
-      "version": "0.1.0"
+      "version": "0.1.1",
+      "transport": {
+        "type": "stdio",
+        "command": "uvx",
+        "args": ["profili-mcp"]
+      }
     }
   ]
 }

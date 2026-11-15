@@ -1,6 +1,6 @@
 [project]
 name = "profili-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "MCP server for the legacy Profili 2.x airfoil software (Jet DB + bundled XFOIL)"
 readme = "README.md"
 requires-python = ">=3.11"

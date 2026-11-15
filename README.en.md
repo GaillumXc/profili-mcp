@@ -1,5 +1,7 @@
 # profili-mcp
 
+mcp-name: io.github.GaillumXc/profili-mcp
+
 [中文](README.md) | English
 
 [![ci](https://github.com/GaillumXc/profili-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/GaillumXc/profili-mcp/actions/workflows/ci.yml) [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![python](https://img.shields.io/badge/python-3.11%2B-blue)](pyproject.toml) [![release](https://img.shields.io/github/v/release/GaillumXc/profili-mcp)](https://github.com/GaillumXc/profili-mcp/releases)

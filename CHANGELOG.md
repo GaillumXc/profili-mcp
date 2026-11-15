@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.1 — 2026-11-15
+
+Packaging/metadata release: adds the `mcp-name` marker required by the MCP
+Registry's PyPI ownership validation; published to PyPI and the MCP Registry.
+
 ## v0.1.0 — 2026-11-15
 
 Initial release.
