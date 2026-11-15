@@ -1,5 +1,7 @@
 # profili-mcp
 
+English | [中文](README.zh.md)
+
 MCP server for the legacy [Profili 2.x](https://www.profili2.com/) airfoil software.
 
 [Profili](https://www.profili2.com/eng/) is a classic airfoil design and analysis tool (2200+ airfoils, 1.26M polar data points) whose development ended around 2015. It has no scripting API and no COM/OLE automation interface, so this project works with the three interfaces it does have:
@@ -86,12 +88,9 @@ python examples/analysis_compute.py && python examples/analysis_naca2412.py
 - **Non-ASCII project path + editable install**: CPython reads `.pth` files with the locale encoding, so an editable install breaks if the clone path contains non-ASCII characters. Clone to an ASCII path, or run with `PYTHONPATH=src python -m profili_mcp`.
 - This repository does not ship Profili itself (commercial, retired software); it only talks to an existing installation.
 
-## Contributors
+## Author & verification scope
 
-- [cjl123bili](https://github.com/cjl123bili) — project owner
-- Kimi K2.8 (Moonshot AI coding assistant) — reverse engineering, core code, docs and examples
-
-Commits follow the `Co-authored-by` convention for AI co-authors.
+The account owner ([cjl123bili](https://github.com/cjl123bili)) is an undergraduate student majoring in **Uncrewed Aircraft Systems Engineering**; this project is a personal work from coursework. **Every feature has been verified against Profili 2.21 only** — other releases (2.0/2.2x revisions, XT, Pro) are untested and may behave differently; issues welcome. Kimi K2.8 (Moonshot AI coding assistant) contributed to the reverse engineering, code, docs and examples, credited via `Co-authored-by` trailers.
 
 ## License
 
