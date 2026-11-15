@@ -39,7 +39,7 @@
 要求：Windows、已安装的 Profili 2.x（`Profili.exe`、`Profili.mdb`、`Xfoil.exe` 位于同一目录）、以及 32 位 `Microsoft Access Driver (*.mdb)` ODBC 驱动（Win10/11 通常自带；缺失时安装 [MDAC](https://www.microsoft.com/en-us/download/details.aspx?id=5793)）。
 
 ```bash
-git clone https://github.com/cjl123bili/profili-mcp.git
+git clone https://github.com/GaillumXc/profili-mcp.git
 cd profili-mcp
 uv sync          # 或 pip install .
 ```
@@ -94,7 +94,7 @@ python examples/analysis_compute.py && python examples/analysis_naca2412.py
 
 ## 作者与验证范围
 
-账号所有者（[cjl123bili](https://github.com/cjl123bili)）为**无人驾驶航空器系统工程**专业本科在读学生，本项目是课程学习过程中的个人作品。**全部功能仅在 Profili 2.21 单一版本上验证过**；其他版本（2.0/2.2x 各修订、XT、Pro 等）未做测试，行为可能存在差异，欢迎提交 issue 反馈。Kimi K2.8（Moonshot AI 编程助手）参与了逆向分析、代码、文档与示例的编写，提交按 `Co-authored-by` 惯例署名。
+账号所有者（[GaillumXc](https://github.com/GaillumXc)）为**无人驾驶航空器系统工程**专业本科在读学生，本项目是课程学习过程中的个人作品。**全部功能仅在 Profili 2.21 单一版本上验证过**；其他版本（2.0/2.2x 各修订、XT、Pro 等）未做测试，行为可能存在差异，欢迎提交 issue 反馈。Kimi K2.8（Moonshot AI 编程助手）参与了逆向分析、代码、文档与示例的编写，提交按 `Co-authored-by` 惯例署名。
 
 ## License
 

@@ -16,7 +16,7 @@ import sys
 import urllib.error
 import urllib.request
 
-REPO = "cjl123bili/profili-mcp"
+REPO = "GaillumXc/profili-mcp"
 API = f"https://api.github.com/repos/{REPO}"
 PROXY = "http://127.0.0.1:7897"
 
@@ -99,8 +99,8 @@ def push_commit(rev: str, parent: str, skip: set[str]) -> str:
     tree = api("POST", "/git/trees", {"tree": entries})
     subject = git("log", "-1", "--format=%s", rev).strip()
     body = git("log", "-1", "--format=%b", rev).strip()
-    author = {"name": "cjl123bili",
-              "email": "cjl123bili@users.noreply.github.com",
+    author = {"name": "GaillumXc",
+              "email": "GaillumXc@users.noreply.github.com",
               "date": git("log", "-1", "--format=%aI", rev).strip()}
     committer = dict(author, date=git("log", "-1", "--format=%cI", rev).strip())
     payload = {"message": subject + ("\n\n" + body if body else ""),

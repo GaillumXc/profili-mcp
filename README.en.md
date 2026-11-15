@@ -39,7 +39,7 @@ All of it is exposed as 14 MCP tools. As far as I can tell this is the first MCP
 Requires Windows, a Profili 2.x installation (`Profili.exe`, `Profili.mdb`, `Xfoil.exe` in one directory), and the 32-bit `Microsoft Access Driver (*.mdb)` ODBC driver (present by default on Windows 10/11; otherwise install [MDAC](https://www.microsoft.com/en-us/download/details.aspx?id=5793)).
 
 ```bash
-git clone https://github.com/cjl123bili/profili-mcp.git
+git clone https://github.com/GaillumXc/profili-mcp.git
 cd profili-mcp
 uv sync          # or: pip install .
 ```
@@ -94,7 +94,7 @@ python examples/analysis_compute.py && python examples/analysis_naca2412.py
 
 ## Author & verification scope
 
-The account owner ([cjl123bili](https://github.com/cjl123bili)) is an undergraduate student majoring in **Uncrewed Aircraft Systems Engineering**; this project is a personal work from coursework. **Every feature has been verified against Profili 2.21 only** — other releases (2.0/2.2x revisions, XT, Pro) are untested and may behave differently; issues welcome. Kimi K2.8 (Moonshot AI coding assistant) contributed to the reverse engineering, code, docs and examples, credited via `Co-authored-by` trailers.
+The account owner ([GaillumXc](https://github.com/GaillumXc)) is an undergraduate student majoring in **Uncrewed Aircraft Systems Engineering**; this project is a personal work from coursework. **Every feature has been verified against Profili 2.21 only** — other releases (2.0/2.2x revisions, XT, Pro) are untested and may behave differently; issues welcome. Kimi K2.8 (Moonshot AI coding assistant) contributed to the reverse engineering, code, docs and examples, credited via `Co-authored-by` trailers.
 
 ## License
 
