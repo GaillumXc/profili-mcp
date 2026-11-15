@@ -39,7 +39,7 @@ Profili 是 1995–2015 年间的经典翼型设计软件（内置 2200+ 翼型�
 要求：Windows + 已安装的 Profili 2.x（`Profili.exe` + `Profili.mdb` + `Xfoil.exe` 同目录）。系统需有 32 位 `Microsoft Access Driver (*.mdb)` ODBC 驱动——Win10/11 通常自带；缺失时安装 [MDAC](https://www.microsoft.com/en-us/download/details.aspx?id=5793) 或 Access Database Engine。
 
 ```bash
-git clone https://github.com/<you>/profili-mcp.git
+git clone https://github.com/cjl123bili/profili-mcp.git
 cd profili-mcp
 uv sync                      # 或 pip install .
 
