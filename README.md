@@ -98,6 +98,13 @@ python -m profili_mcp --selftest
 
 本项目仅用于个人学习与研究。Profili 是 devCAD/Stefano Nardone 的软件，权利归原作者所有；XFOIL 由 Mark Drela 开发并随 Profili 捆绑分发。请勿将本项目用于商业用途。
 
+## 贡献者
+
+- **cjl123bili** — 项目发起人：需求定义、实机验证与测试环境
+- **Kimi K2.8**（Moonshot AI 编程助手）— 逆向分析、核心代码、文档与实战示例的主要共同开发者
+
+> 本仓库的提交遵循 [Co-authored-by](https://docs.github.com/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors) 惯例署名 AI 协作者。
+
 ## License
 
 MIT（见 [LICENSE](LICENSE)）。
