@@ -12,6 +12,10 @@ MCP server for the legacy [Profili 2.x](https://www.profili2.com/) airfoil softw
 
 All of it is exposed as 14 MCP tools. As far as I can tell this is the first MCP server for Profili; the storage format findings that make it possible are documented in [docs/SCHEMA.md](docs/SCHEMA.md).
 
+![NACA 2412 polar at Re=300k: computed vs Profili library](examples/figures/fig2_cl_alpha_cd_alpha.png)
+
+*Worked example ([examples/](examples/)): NACA 2412 @ Re=3×10⁵ — computed polar vs the built-in library polar.*
+
 ## Tools
 
 | Tool | What it does |
